@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+.container {
+  background-color: rgb(44, 54, 112);
+  border: 1px solid green;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: "";
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('sipacea.png');
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: top;
+  top: 50px;
+  opacity: 0.05; /* controla a transparência da imagem */
+  pointer-events: none;
+}
+
+.card {
+  background-color: rgb(15, 40, 184);
+  min-width: 240px;
+  border: 1px gray solid;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  text-align: center;
+  margin: 16px;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.head {
+  margin-top: 1rem;
+  grid-column: span 2;
+}
+
+input {
+  padding: 4px;
+  border-radius: 8px;
+  color: black;
+  outline-color: rgb(7, 1, 102);
+  text-align: center;
+  color: blue;
+  font-weight: 700;
+}
+
+@media (max-width: 370px) {
+  input {
+    max-width: 100px;
+  }
+
+  .meu-elemento {
+    font-size: 12px;
+    display: none;
+  }
+}
