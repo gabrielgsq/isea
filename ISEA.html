@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISEA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      color: white;
+      font-family: sans-serif;
+      font-size: 1rem;
+    }
+
+    .container {
+      background-color: rgb(44, 54, 112);
+      border: 1px solid green;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: rgb(15, 40, 184);
+      min-width: 240px;
+      border: 1px gray solid;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      text-align: center;
+      margin: 16px;
+      padding: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .head {
+      margin-top: 1rem;
+      grid-column: span 2;
+    }
+
+    input {
+      padding: 4px;
+      border-radius: 8px;
+      color: black;
+      outline-color: rgb(7, 1, 102);
+      text-align: center;
+      color: blue;
+      font-weight: 700;
+    }
+
+    @media (max-width: 370px) {
+      input {
+        max-width: 100px;
+      }
+
+      .meu-elemento {
+        font-size: 12px;
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card card2">
+      <div class="head">RESULTADO</div>
+      <div>INDICADOR</div>
+      <div id="result">Preencha todos os dados abaixo</div>
+      <div class="head" id="legend">---</div>
+    </div>
+
+    <div class="card">
+      <div class="head">ISEA</div>
+      <div>Nº Movimentos (M) 2025</div>
+      <div><input type="number" id="movimentos" /></div>
+      <div>Nº Ocorrências (O)</div>
+      <div><input type="number" id="ocorrencias" /></div>
+      <div>Incidentes de Risco Potencial (P)</div>
+      <div><input type="number" id="potencial" /></div>
+      <div>Incidentes de Risco Crítico [C]</div>
+      <div><input type="number" id="critico" /></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const inputMovimentos = document.querySelector("#movimentos");
+      const inputOcorrencias = document.querySelector("#ocorrencias");
+      const inputPotencial = document.querySelector("#potencial");
+      const inputCritico = document.querySelector("#critico");
+
+      const result = document.querySelector("#result");
+      const legend = document.querySelector("#legend");
+
+      function update() {
+        const m = parseFloat(inputMovimentos.value);
+        const o = parseFloat(inputOcorrencias.value);
+        const p = parseFloat(inputPotencial.value);
+        const c = parseFloat(inputCritico.value);
+
+        if (isNaN(m) || isNaN(o) || isNaN(p) || isNaN(c)) {
+          result.textContent = "Preencha todos os dados acima";
+          legend.textContent = "---";
+          return;
+        }
+
+        let valor = 0;
+        valor += o * 25;
+        valor += p * 60;
+        valor += c * 15;
+        valor = valor / 100;
+        valor = valor / m;
+        valor = valor * 100000;
+
+        let final = (100 - valor).toFixed(2);
+        final = Math.max(0, Math.min(final, 100));
+
+        let legenda = "PÉSSIMO";
+        if (final >= 50) legenda = "RUIM";
+        if (final >= 55) legenda = "ABAIXO";
+        if (final >= 60) legenda = "REGULAR";
+        if (final >= 65) legenda = "BOM";
+        if (final >= 70) legenda = "MUITO BOM";
+        if (final >= 80) legenda = "ÓTIMO";
+        if (final >= 85) legenda = "EXCELENTE!";
+
+        result.textContent = final + "%";
+        legend.textContent = legenda;
+      }
+
+      inputMovimentos.addEventListener("input", update);
+      inputOcorrencias.addEventListener("input", update);
+      inputPotencial.addEventListener("input", update);
+      inputCritico.addEventListener("input", update);
+    });
+  </script>
+</body>
+</html>
